@@ -5,18 +5,21 @@ import random
 #Each sol have violated to the constraint <M*Zk get penalty 1 000 000
 #Each sol have customer no served or have more than 1 center served get 1000 000 
 #Each center have not pass the min and max through will get 1000 000 
-def integer_decsion(number_sol,capacity):
+def integer_decsion(number_sol,capacity,decision):
     result=numpy.empty((0,80),int)
     for j in range(number_sol):
         temp=numpy.empty((0),int)
         for a in range(len(capacity[0])):
             for b in range(len(capacity)):
                 sum_capacity=numpy.random.randint(10,high=capacity[b][a]/10,size=1)*10            
-                #print(sum_capacity)
+                #print(sum_capacity),
                 for i in range(4):
                     k=numpy.random.randint(sum_capacity/10,size=1)
-                    temp=numpy.append(temp,k*10)
-                    sum_capacity=sum_capacity-k*10
+                    if decision[j][i] !=0:
+                        temp=numpy.append(temp,k*10)
+                        sum_capacity=sum_capacity-k*10
+                    else:
+                        temp=numpy.append(temp,0)
         result=numpy.append(result,[temp],axis=0)
     return result
 def choose_center(decision):
@@ -125,7 +128,9 @@ def penalty(pop,fitness,center,demand,capacity):
     chosen_center=numpy.empty((0,4))
     plant_amount=numpy.empty((0,80),int)
     decision_serve=numpy.empty((0,24),int)
-    result=fitness
+    result=numpy.empty((0),int)
+    for i in range(len(fitness)):
+        result=numpy.append(result,fitness[i])
     for i in range(len(pop)):
         chosen_center=numpy.append(chosen_center,[pop[i][24:28]],axis=0)
         decision_serve=numpy.append(decision_serve,[pop[i][0:24]],axis=0)

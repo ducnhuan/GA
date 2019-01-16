@@ -25,7 +25,7 @@ def Genetic_algorithm(path,num_gen,num_sol,selection):
     #Integer decision variable for transfer the commodity from plan to center
     num_weights=len(capacity[0])*len(capacity)*len(center[0])
     pop_size=(sol_per_pop,num_weights)
-    integer_population=algo.integer_decsion(sol_per_pop,capacity)
+    integer_population=algo.integer_decsion(sol_per_pop,capacity,binary_center)
     #Merge two population in to innitiate population 
     new_population=numpy.append(binary_population,integer_population,axis=1)
     print(new_population)
@@ -46,16 +46,19 @@ def Genetic_algorithm(path,num_gen,num_sol,selection):
         print("Best result:",numpy.amin(algo.cal_pop_fitness(new_population,demand,plan_distance,customer_distance,transport_fee,center)))
         best_result.append(numpy.amin(algo.cal_pop_fitness(new_population,demand,plan_distance,customer_distance,transport_fee,center)))
 
-    fitness = algo.cal_pop_fitness(new_population,demand,plan_distance,customer_distance,transport_fee,center)
+    cost = algo.cal_pop_fitness(new_population,demand,plan_distance,customer_distance,transport_fee,center)
+    fitness=algo.penalty(new_population,cost,center,demand,capacity)
     # Then return the index of that solution corresponding to the best fitness.
     best_match_idx = numpy.where(fitness == numpy.amin(fitness))
-
-    print("Best solution : ", new_population[best_match_idx, :])
-    print("Best cost : ", fitness[best_match_idx])
-    result=numpy.append(new_population[best_match_idx, :],fitness[best_match_idx])
+    if len(best_match_idx[0])>1:
+        result=numpy.append(new_population[best_match_idx[0][0], :],cost[best_match_idx[0][0]])
+    else:
+        result=numpy.append(new_population[best_match_idx[0], :],cost[best_match_idx[0]])
     return result
+
     
-#Genetic_algorithm("data.xlsx",1,10,"Linear")
+result=Genetic_algorithm("data.xlsx",1,10,"Linear")
+print(result)
 
 
 
