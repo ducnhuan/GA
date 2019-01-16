@@ -28,9 +28,9 @@ def Genetic_algorithm(path,num_gen,num_sol,selection):
     integer_population=algo.integer_decsion(sol_per_pop,capacity,binary_center)
     #Merge two population in to innitiate population 
     new_population=numpy.append(binary_population,integer_population,axis=1)
-    print(new_population)
+    #print(new_population)
     print(new_population[0])
-    print("Selection: ",selection=="Linear")
+    #print("Selection: ",selection=="Linear")
     for generation in range(number_generation):
         print("Generation",generation)
         fitness = algo.cal_pop_fitness(new_population,demand,plan_distance,customer_distance,transport_fee,center)
@@ -47,9 +47,8 @@ def Genetic_algorithm(path,num_gen,num_sol,selection):
         best_result.append(numpy.amin(algo.cal_pop_fitness(new_population,demand,plan_distance,customer_distance,transport_fee,center)))
 
     cost = algo.cal_pop_fitness(new_population,demand,plan_distance,customer_distance,transport_fee,center)
-    fitness=algo.penalty(new_population,cost,center,demand,capacity)
     # Then return the index of that solution corresponding to the best fitness.
-    best_match_idx = numpy.where(fitness == numpy.amin(fitness))
+    best_match_idx = numpy.where(cost == numpy.amin(cost))
     if len(best_match_idx[0])>1:
         result=numpy.append(new_population[best_match_idx[0][0], :],cost[best_match_idx[0][0]])
     else:
@@ -57,8 +56,8 @@ def Genetic_algorithm(path,num_gen,num_sol,selection):
     return result
 
     
-result=Genetic_algorithm("data.xlsx",1,10,"Linear")
-print(result)
+#result=Genetic_algorithm("data.xlsx",100,10,"Linear")
+#print(result)
 
 
 

@@ -138,7 +138,7 @@ def penalty(pop,fitness,center,demand,capacity):
     for i in range(len(pop)):
         sum_center=int(numpy.sum(chosen_center[i]))
         if sum_center > 3 or sum_center==0:
-            result[i]=result[i]+10000000
+            result[i]=result[i]+1000000000
         center1=0
         center2=0
         center3=0
@@ -260,7 +260,7 @@ def select_mating_pool(pop, fitness, num_parents,center,demand,capacity):
         min_fitness_idx = numpy.where(fit_constraint == numpy.amin(fit_constraint))
         min_fitness_idx = min_fitness_idx[0][0]
         parents[parent_num, :] = pop[min_fitness_idx, :]
-        fitness[min_fitness_idx] =2147483647
+        fit_constraint[min_fitness_idx] =2147483647
     return parents
 def select_mating_pool1(pop, fitness, num_parents,center,demand,capacity):
     parents=numpy.empty((num_parents, pop.shape[1]))
@@ -328,5 +328,5 @@ def mutation(offspring_crossover):
             offspring_crossover[idx,random_index+i]+=random_val*10
             if offspring_crossover[idx,random_index+i] <0:
                 offspring_crossover[idx,random_index+i]=offspring_crossover[idx,random_index+i]*-1
-    print(offspring_crossover[idx])
+    #print(offspring_crossover[idx])
     return offspring_crossover

@@ -92,7 +92,7 @@ class MyFirstGUI:
             cen=Label(master,width=15)
             cen.configure(text=centername[i])
             cen.grid(row=10,column=2+i)
-        print(result[28])
+        #print(result[28])
         idx=28
         rownum=10
         for i in range(len(planname)):
@@ -104,7 +104,7 @@ class MyFirstGUI:
                     amount.configure(text=result[idx])
                     amount.grid(row=rownum,column=2+k)
                     idx+=1
-        print(result[107])
+        #print(result[107])
         #plant2=Label(master)
         #plant2.configure(text=planname[1])
         #plant2.grid(row=10,column=5,columnspan=5,sticky='EWNS')
